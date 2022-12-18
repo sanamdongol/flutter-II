@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:frost_app/screens/dashboard.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatefulWidget {
@@ -92,6 +93,13 @@ class _LoginPageState extends State<LoginPage> {
                       } else if (!isChecked) {
                         showMeAlert(context);
                       } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DashboardPage(),
+                          ),
+                        );
+
                         Fluttertoast.showToast(
                             msg: "Successfully form validated",
                             toastLength: Toast.LENGTH_SHORT,
@@ -138,7 +146,9 @@ class _LoginPageState extends State<LoginPage> {
                                 text: " Privacy Policy",
                                 style: TextStyle(color: Colors.blue),
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () {}),
+                                  ..onTap = () {
+                                    showMeBottomSheet(context);
+                                  }),
                           ])),
                     ),
                   ],
@@ -161,10 +171,17 @@ class _LoginPageState extends State<LoginPage> {
                   "Before starting you need to agree to our Terms and Conditions"),
               actions: [
                 TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text("OK"))
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("OK"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Cancel"),
+                ),
               ],
             ));
   }
@@ -177,4 +194,30 @@ class _LoginPageState extends State<LoginPage> {
       throw 'Could not launch $url';
     }
   }
+}
+
+void showMeBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.close),
+                ),
+              ),
+              Text("Terms and Conditions"),
+              SizedBox(height: 20),
+              Text(
+                  "A very very long terms and conditions go here. Can be very long or short")
+            ],
+          ),
+        );
+      });
 }
