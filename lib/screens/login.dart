@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -14,6 +16,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +89,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         );
+                      } else if (!isChecked) {
+                        showMeAlert(context);
                       } else {
                         Fluttertoast.showToast(
                             msg: "Successfully form validated",
@@ -104,8 +110,16 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Row(
                   children: [
+                    Checkbox(
+                        checkColor: Colors.white,
+                        value: isChecked,
+                        onChanged: (value) {
+                          setState(() {
+                            isChecked = value!;
+                            print(value);
+                          });
+                        }),
                     Expanded(
-                      
                       child: RichText(
                           text: TextSpan(
                               text: "By continuing you agree to our",
@@ -135,6 +149,24 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void showMeAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => AlertDialog(
+              title: Text("Action Required"),
+              content: Text(
+                  "Before starting you need to agree to our Terms and Conditions"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("OK"))
+              ],
+            ));
   }
 
   Future<void> _launchUrl(String link) async {
