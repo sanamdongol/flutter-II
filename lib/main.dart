@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       ),
      // home: const LoginPage(),
       home: const DashboardPage(),
+
       debugShowCheckedModeBanner: false,
     );
   }
