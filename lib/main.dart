@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frost_app/screens/dashboard.dart';
 import 'package:frost_app/screens/login.dart';
 
 void main() {
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(),
+     // home: const LoginPage(),
+      home: const DashboardPage(),
       debugShowCheckedModeBanner: false,
     );
   }
